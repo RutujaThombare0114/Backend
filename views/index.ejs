@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Mini</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+   
+</head>
+<body>
+    <div class="container mt-5">
+        <h3>All Chats</h3>
+
+        <form method="GET" action="/chats/new">
+            <button class="btn btn-primary mb-3">New Chat</button>
+        </form>
+       
+        <div class="row">
+            <% for (let chat of chats) { %>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body"> 
+                            <p class="mb-1">From: <i><%= chat.from %></i></p> 
+                            <p class="mb-1"><%= chat.msg %></p>
+
+                            <!-- Edit and Delete buttons -->
+                            <div class="btn-group" role="group" aria-label="Post Actions">
+                                <form method="GET" action="/chats/<%= chat._id %>/edit">
+                                    <button class="btn btn-sm btn-outline-secondary mr-1">Edit</button>
+                                </form>
+
+                                <form method="POST" action="/chats/<%= chat._id %>?_method=DELETE" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                                    <button class="btn btn-sm btn-outline-danger mr-1">Delete</button>
+                                </form>
+                            </div>
+
+                            <!-- Show Post button -->
+                            <form method="GET" action="/chats/<%= chat._id %>">
+                                <button class="btn btn-sm btn-outline-info mt-1">Show Post</button>
+                            </form> 
+                        </div>
+                        <div class="card-footer">
+                            <p>Received By: <i><%= chat.to %></i></p> 
+                            <hr>
+                            <p><%= chat.created_at.toString().split(" ")[4] %></p>
+                            <p><%= chat.created_at.toString().split(" ").slice(0,4).join("-") %></p>
+                        </div>
+                    </div>
+                </div>
+            <% } %> 
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

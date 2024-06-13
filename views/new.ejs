@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write New Chat</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS */
+        body {
+            padding: 20px;
+        }
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Write New Chat</h3>
+        <% if (errors && errors.length > 0) { %>
+            <div class="alert alert-danger">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+        <form method="POST" action="/chats" id="chatForm" novalidate>
+            <div class="form-group">
+                <label for="from">Who are you?</label>
+                <input type="text" class="form-control" id="from" placeholder="Enter your name" name="from" value="<%= formData.from %>">
+                <div id="fromError" class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="form-group">
+                <label for="msg">Message</label>
+                <textarea class="form-control" id="msg" rows="5" placeholder="Write your message here..." name="msg"><%= formData.msg %></textarea>
+                <div id="msgError" class="invalid-feedback">Please enter your message.</div>
+            </div>
+            <div class="form-group">
+                <label for="to">Add Receiver</label>
+                <input type="text" class="form-control" id="to" placeholder="Enter receiver's name" name="to" value="<%= formData.to %>">
+                <div id="toError" class="invalid-feedback">Please enter the receiver's name.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Chat</button>
+        </form>
+    </div>
+</body>
+</html>
